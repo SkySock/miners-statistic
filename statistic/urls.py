@@ -1,0 +1,11 @@
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
+app_name = 'statistic'
+
+urlpatterns = [
+    path('', views.StatisticView.as_view(), name='main_page'),
+    path('calc/', views.GetCalculator.as_view(), name='calculator'),
+    path('api/stats/', views.GetStatisticJson.as_view(), name='json_stats'),
+]

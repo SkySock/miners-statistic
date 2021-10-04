@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <!-- XDSoft DateTimePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Общая доля</th>
+              <th scope="col">Доля</th>
+              <th scope="col">Оплата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for miner in stats.miners %}
+                <tr>
+                  <th scope="col">{{ miner.miner.id }}</th>
+                  <td>{{ miner.miner.name }}</td>
+                  <td>{{ miner.share }}</td>
+                  <td>{{ miner.res_share }}</td>
+                  <td>{{ miner.payment }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="/calc/" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Вычислить">
+    </form>
+    <script>
+      $(function() {
+        $("#id_begin_time").datetimepicker({
+          format: 'd/m/Y H:i',
+        });
+        $("#id_end_time").datetimepicker({
+          format: 'd/m/Y H:i',
+        });
+      });
+    </script>
+
+
+    Время {{ stats.time }}
+</body>
+</html>

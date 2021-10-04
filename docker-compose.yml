@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  dev_web_stats:
+    build: ./
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/miners
+    ports:
+      - 25566:8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - dev_redis
+  dev_celery:
+    build: ./
+    command: celery -A Miners worker -B --loglevel=INFO
+    volumes:
+      - .:/miners
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - dev_redis
+
+  dev_redis:
+    image: redis:alpine
