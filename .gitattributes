@@ -1,2 +1,2 @@
 *.js linguist-language=Python
-static/* linguist-vendor
+static/* linguist-vendored
